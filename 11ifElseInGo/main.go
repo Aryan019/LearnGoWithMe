@@ -35,4 +35,10 @@ func main() {
 	} else {
 		fmt.Println("Condition is not satisfied ")
 	}
+
+	// var err string;
+
+	// if err!= nil{
+	// 	fmt.Println("")
+	// }
 }
