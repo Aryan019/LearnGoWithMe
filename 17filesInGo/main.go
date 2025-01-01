@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 )
 
@@ -39,6 +40,32 @@ func main() {
 	fmt.Printf("Length is %v", length)
 	// After the creation of file closing in the file in go lang
 
+	readingInTheFile("./mySampleTextFileFromOs")
+
 	// Using in defer to close in the file as it must be executed at the very very last
 	defer file.Close()
+
+}
+
+// Reading from the file
+func readingInTheFile(filename string) {
+	// Handling in the error in go
+
+	// The content here will get a stream of databytes not a string always remember
+	content, err := ioutil.ReadFile(filename)
+
+	if err != nil {
+		fmt.Println("Something is wrong")
+		panic(err)
+	}
+
+	fmt.Println("The file contents are ", string(content))
+
+}
+
+// Wrapping up the error code into a function
+func checkNilError(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
