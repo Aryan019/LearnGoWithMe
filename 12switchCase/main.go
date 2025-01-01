@@ -15,11 +15,11 @@ package main
 
 // 	print the dice
 
-switch diceNumber {
-case 1:
-	fmt.Println("Dice value is 1 and you can open ")
-}
-case 2:
-	fmt.Println("Dice value is 2 if it is closed dont move if not just move up 2 places")
+// switch diceNumber {
+// case 1:
+// 	fmt.Println("Dice value is 1 and you can open ")
+
+// case 2:
+// 	fmt.Println("Dice value is 2 if it is closed dont move if not just move up 2 places")
 
 // }
