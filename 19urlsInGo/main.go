@@ -9,6 +9,8 @@ func main() {
 	fmt.Println(myUrl)
 	fmt.Println("Urls in go lang ")
 
+	// Not fully completed have some dependencies issues in the go
+
 	// parsing an url means extracting out some data from it
 	// like http library was used in to sent in the requests to the server
 
