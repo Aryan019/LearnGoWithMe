@@ -27,7 +27,12 @@ func main() {
 	defer response.Body.Close()
 
 	// Reading in that response
+	// io readall helps read the response and convert it to the databytes
 	databytes, err := io.ReadAll(response.Body)
+
+	if err != nil {
+		panic(err)
+	}
 
 	// Converting it to the string
 	content := string(databytes)
