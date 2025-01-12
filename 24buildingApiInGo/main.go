@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 // Creating in models for our file
@@ -58,4 +60,28 @@ func getAllCourses(w http.ResponseWriter, r *http.Request) {
 
 	// Sending in the response with the help of the response writer
 	json.NewEncoder(w).Encode(courses)
+}
+
+// Get one course
+func getOneCourse(w http.ResponseWriter, r *http.Request) {
+
+	//Setting up the headers of the file
+	w.Header().Set("Content-Type", "application/json")
+
+	// Grabbing in the course id
+	//gorilla mux router also provides us the way to grab in the params here
+	params := mux.Vars(r)
+
+	// Looping in the courses and finding in the course with that particular id
+	for _, course := range courses {
+		if course.CourseId == params["id"] {
+			json.NewEncoder(w).Encode(course)
+			// returning in the function
+			return
+		}
+	}
+
+	json.NewEncoder(w).Encode("No course found with this id")
+	return
+
 }
