@@ -1,5 +1,11 @@
 package main
 
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+)
+
 // Creating in models for our file
 // The model should go in a file
 // Remember to import in the file
@@ -32,4 +38,24 @@ func (c *Course) isEmpty() bool {
 
 func main() {
 
+}
+
+// Controllers in go lang -- also in a separate file
+// serve home route
+
+func serveHome(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("<h1>Welcome to go lang aryan It is my home page   </h1>"))
+
+}
+
+func getAllCourses(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Get all the courses")
+
+	// Setting up the headers of the file
+	// Writing up the headers of the file
+
+	w.Header().Set("Content-Type", "application/json")
+
+	// Sending in the response with the help of the response writer
+	json.NewEncoder(w).Encode(courses)
 }
