@@ -111,7 +111,3 @@ func performFormRequest() {
 	fmt.Println(string(content))
 
 }
-
-// Creating in the json data in go lang
-
-// We were reciving in the json data but not treating it as in the json data structure

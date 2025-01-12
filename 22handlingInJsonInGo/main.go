@@ -63,3 +63,54 @@ func encodeJson() {
 	// so basically first declare in rhe struct and then put in the data into it and then by using in the json marshal
 	// method convert to json and then send in the data also the - and omitempty are also a thing here
 }
+
+// Part 2 consuming in or decoding in the json data
+
+func decodeJson() {
+	// the data that comes in the go
+	// It is by default in the bytes format
+	// So we need to convert it to the string
+	// and then send it to the json unmarshal method
+
+	jsonDataFromWeb := []byte(
+		`{
+		"name" : "Aryan",
+		"price" : 100,
+		"platform" : "Aryan",
+		"password" : "1234",
+		"tags" : ["Backend", "Frontend"]
+		
+		
+		}
+	`)
+
+	// Checking in the data is valid or not
+	// json.valid is nothing but checking in the data is valid or not
+	checkValid := json.Valid(jsonDataFromWeb)
+
+	if checkValid {
+		fmt.Println("The json data is valid")
+
+		// Passing in the actual data in json
+		json.Unmarshal(jsonDataFromWeb, &jsonDataFromWeb)
+
+		// to print in the data from this
+		// we use in
+		// The below line is used for the pretty print
+		fmt.Printf("%#v\n", jsonDataFromWeb)
+	}
+
+	//add in the data using the key value pairs in
+	// basically converting in the data of json to the map
+	var myOnlineData map[string]interface{}
+	json.Unmarshal(jsonDataFromWeb, &myOnlineData)
+
+	// makes it a map from the json data
+	fmt.Printf("%#v\n", myOnlineData)
+
+	// Order is not guaranteed in maps
+
+	for k, v := range myOnlineData {
+		fmt.Printf("The key is %v and the value is %v\n", k, v)
+	}
+}
