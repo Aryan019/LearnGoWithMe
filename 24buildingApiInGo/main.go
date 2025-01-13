@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -43,8 +44,45 @@ func (c *Course) isEmpty() bool {
 }
 
 func main() {
+	fmt.Println("The main function is in here ")
+
+	// Initializing in the router in here
+	r := mux.NewRouter()
+
+	// Seeding in the courses in here
+	courses = append(courses, Course{
+		CourseId:    "1",
+		CourseName:  "Go lang",
+		CoursePrice: 0,
+		Author: &Author{
+			FullName: "Aryan",
+		},
+	},
+
+		Course{
+			CourseId:    "2",
+			CourseName:  "Python lang",
+			CoursePrice: 0,
+			Author: &Author{
+				FullName: "Aryan",
+			},
+		},
+	)
+
+	// Handling in the routes in here
+	r.HandleFunc("/", serveHome).Methods("GET")
+	r.HandleFunc("/courses", getAllCourses).Methods("GET")
+	r.HandleFunc("/course/{id}", getOneCourse).Methods("GET")
+	r.HandleFunc("/course", createOneCourse).Methods("POST")
+	r.HandleFunc("/updateCourse/{id}", updateOne).Methods("PUT")
+	r.HandleFunc("/deleteCourse/{id}", deleteOne).Methods("DELETE")
+
+	// Activating in the server of this in the go lang
+	log.Fatal(http.ListenAndServe(":4000", r))
 
 }
+
+// can be some problem in above based on some syntax and all
 
 // Controllers in go lang -- also in a separate file
 // serve home route
@@ -193,4 +231,27 @@ func updateOne(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+}
+
+// Deleting in a record based on the unique course id
+
+func deleteOne(w http.ResponseWriter, r *http.Request) {
+
+	// Extracting the id of the course which has to be deleted in
+	w.Header().Set("Content-Type", "application/json")
+	// The id is extracted in
+	params := mux.Vars(r)
+
+	// Looping through the courses
+
+	for index, course := range courses {
+
+		// Successfully deleting in  a record
+		if course.CourseId == params["id"] {
+			courses = append(courses[:index], courses[index+1:]...)
+			json.NewEncoder(w).Encode(courses)
+			return
+		}
+	}
+
 }
