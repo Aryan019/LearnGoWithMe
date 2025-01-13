@@ -3,7 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -34,6 +37,7 @@ var courses []Course
 
 // Attaching this method to my struct
 func (c *Course) isEmpty() bool {
+	// off the id check while using in the create one course method
 	return c.CourseId == "" && c.CourseName == ""
 
 }
@@ -82,6 +86,71 @@ func getOneCourse(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode("No course found with this id")
+	return
+
+}
+
+// Performing in a create operation in go lang
+
+func createOneCourse(w http.ResponseWriter, r *http.Request) {
+
+	// json is coming in in this function
+	// so this time we are creating in the data through in the request json object and body
+
+	// So firstly we have to decode in the json here
+	fmt.Println("Create one course")
+	// Setting up the headers of the file
+	w.Header().Set("Content-Type", "application/json")
+
+	// What if the body received is nil and is not defined ;
+	// r.body gives us the request body to us
+	// That body can be used to find in some attributes or have some validation check on the data
+	if r.Body == nil {
+		// Sending in a json response back to the client that he is entering in the empty one here
+		// for sending in the data in the json back we use in some newEncoder and then in
+		// encoder we pass in the writer object and then we pass in the data
+		json.NewEncoder(w).Encode("Please send in some data")
+	}
+
+	// what about when data is {}
+
+	// Creating in a variable called course of Course type here
+	var course Course
+	//While decoding in we utilize in the reader here
+	// and we are decoding in the request body here
+	// so see it below
+
+	//When utilizing in a encoder or decodder we firstly create in teh
+	// newEncoder and decoder and then apply in the encode and decode method to it
+
+	// In decode method we specify in where to receive in the decoded data
+	_ = json.NewDecoder(r.Body).Decode(&course)
+
+	if course.isEmpty() {
+		// Sending in a json response back to the client that he is entering in the empty one here
+		// for sending in the data in the json back we use in some newEncoder and then in
+		// encoder we pass in the writer object and then we pass in the data
+		json.NewEncoder(w).Encode("No data inside the json ")
+		return
+	}
+
+	// The decoded data is in the course variable
+	// Now pushing in the data in the courses slie that is in our fake db
+
+	// Generating in the unique id and converting it into string
+	rand.Seed(time.Now().Unix())
+
+	// Itoa method converts in the pased integert to the string
+	course.CourseId = strconv.Itoa(rand.Intn(1000))
+
+	// we have a stringconv package in go used for string conversion here
+
+	// pushing in the fake db
+	// using in the append method to append in the course into thatc
+	courses = append(courses, course)
+
+	json.NewEncoder(w).Encode(course)
+
 	return
 
 }
