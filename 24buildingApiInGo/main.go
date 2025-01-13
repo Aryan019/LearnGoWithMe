@@ -154,3 +154,43 @@ func createOneCourse(w http.ResponseWriter, r *http.Request) {
 	return
 
 }
+
+// Updating in one course in go lang
+// The u operation of the crud
+func updateOne(w http.ResponseWriter, r *http.Request) {
+	// The values which are to be updated
+	// and the course which is to be updated using in the unique course id
+
+	// to imitate we are gonna loop through the slice
+	// and find in the course with that particular id
+	// and if found we are going to update the course
+
+	fmt.Println("Updating in a particular course with the unique course id ")
+	w.Header().Set("Content-Type", "application/json")
+
+	var infoFromReqToBeUpdated Course
+	_ = json.NewDecoder(r.Body).Decode(&infoFromReqToBeUpdated)
+
+	// Grabbing in the course id
+	params := mux.Vars(r)
+
+	// Looping through the courses data structure
+	for index, course := range courses {
+		if course.CourseId == params["id"] {
+			// Removing in the old course
+			// db behavior imitiation
+
+			// Forming in the slice once again now
+			courses = append(courses[:index], courses[index+1:]...)
+
+			// Decoding in the data which is received in the request body
+			_ = json.NewDecoder(r.Body).Decode(&infoFromReqToBeUpdated)
+
+			infoFromReqToBeUpdated.CourseId = params["id"]
+			courses = append(courses, infoFromReqToBeUpdated)
+
+			json.NewEncoder(w).Encode(courses)
+			return
+		}
+	}
+}
