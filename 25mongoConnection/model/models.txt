@@ -1,0 +1,35 @@
+// package model
+
+// import (
+//     "context"
+//     "time"
+
+//     "go.mongodb.org/mongo-driver/v2/mongo"
+//     "go.mongodb.org/mongo-driver/v2/mongo/options"
+//     "go.mongodb.org/mongo-driver/v2/mongo/readpref"
+// )
+
+// // Connecting in with the mongo database
+// client, _ := mongo.Connect(options.Client().ApplyURI("mongodb://localhost:27017"))
+
+// // We are using in the bson package in here now
+// // bson is nothing but binary object serialization
+// // whenever we use in mongo it gives us some ids
+// //and have an attribute called _id which is nothing but the id
+// // which is coming from mongo0
+
+// // Importing in some docs
+
+// // Defining in the struct
+
+// defer func() {
+//     if err = client.Disconnect(ctx); err != nil {
+//         panic(err)
+//     }
+// }()
+
+// type Netflix struct {
+// 	ID      primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+// 	Movie   string             `json:"movie,omitempty"`
+// 	Watched bool               `json:"watched,omitempty"`
+// }
